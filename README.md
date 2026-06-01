@@ -1,29 +1,8 @@
-<div align="center">
+# frida_down
 
-# 🔥 frida_down
+Frida binaries downloader
 
-**Frida binaries downloader**
-
-</div>
-
----
-
-## 📋 Table of Contents
-
-- [About](#about)
-- [Installation](#installation)
-- [Dependencies](#dependencies)
-- [Usage](#usage)
-
----
-
-## 🎯 About
-
-`frida_down` is a tool for downloading Frida binaries.
-
----
-
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -43,9 +22,7 @@ cd frida_down
 pip install -r requirements.txt
 ```
 
----
-
-## 📚 Dependencies
+## Dependencies
 
 | Package | Version |
 |---------|---------|
@@ -61,12 +38,3 @@ pip install -r requirements.txt
 | requests | 2.34.2 |
 | typing_extensions | 4.15.0 |
 | urllib3 | 2.7.0 |
-
----
-
-## 🚀 Usage
-
-```bash
-python frida_down.py
-```
-
