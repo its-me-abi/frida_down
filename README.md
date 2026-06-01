@@ -1,28 +1,24 @@
-# frida_down
+# 🔽 frida_down
 
-Frida binaries downloader
+> A lightweight Frida binaries downloader
 
-## Installation
-
-### Prerequisites
+## 📋 Prerequisites
 
 - Python 3.x
 - pip (Python package manager)
 
-### Quick Start
+## 🚀 Quick Start
 
-1. **Clone the repository:**
 ```bash
+# Clone the repository
 git clone https://github.com/its-me-abi/frida_down.git
 cd frida_down
-```
 
-2. **Install dependencies:**
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-## Dependencies
+## 📦 Dependencies
 
 | Package | Version |
 |---------|---------|
