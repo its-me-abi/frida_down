@@ -1,6 +1,6 @@
-from github import Github
+from github import Github,Auth
 from urllib.request import urlretrieve
-import logging,os
+import logging,os,re
 
 """
                   === frida donwloader ===
@@ -8,9 +8,9 @@ import logging,os
                 date   : 1/6/2026
 
 this modules is created because currently  adding frida agent to android device is a headache for me
-we have to downlaod matching binary according to the frida we use for runnning in computer,
-so we must go thorugh github assetpage and read all things and download it then using adb we have to inject it,
-to make this process easy i created this python module.i have plan to create a gui for this that is my ultimeate aim
+we have to download matching binary according to the frida we use for runnning in computer,
+so we must go through github assetpage and read all things and download it then using adb we have to inject it,
+to make this process easy i created this python module.also i have plan to create a gui for this
 
 """
 
@@ -26,8 +26,8 @@ log = logger.info
 
 class frida:
         
-        token = os.getenv("GITHUB_TOKEN")
-        git  = Github( token , per_page = 100 )
+        token = Auth.Token( os.getenv("GITHUB_TOKEN") )
+        git  = Github( auth = token , per_page = 100 )
         latest = ""
         
         def __init__(self , filepath = "./frida_server" ):
@@ -68,16 +68,78 @@ class frida:
                 release = self.get_release(release_name)
                 for asset in release.get_assets():
                         yield asset
-
-if __name__ == "__main__":
+                        
+class assetname_parser: # borrowed and modified
+        "to parse frida release asset names"
+        
+        x86 = "x86"
+        x64 = "x86_64"
+        arm = "arm"
+        arm64 = "arm64"
+        
+        class platform :
+                android = "Android"
+                linux = "Linux"
+                windows = "Windows"
+        
+        ANDROID_ASSET_RE = re.compile(
+                r"^(?P<name>frida-(?:server|gadget|core-devkit))-"
+                r"(?P<version>\d+\.\d+\.\d+)-"
+                r"android-(?P<arch>arm64|arm|x86_64|x86)"  # i modified order so arm64 detected otherwise it will detect arm first
+        )
+        @staticmethod
+        def parse( fullname , platform):
+                """
+                :param fullname: asset name of fridas github releases
+                :param platform: assetname_parser.platform.android or , assetname_parser.platform.linux or
+                                 assetname_parser.platform.windows
+                :return:
+                """
+                match = None
+                if platform == assetname_parser.platform.android:
+                        match = assetname_parser.ANDROID_ASSET_RE.match(fullname)
+                elif platform == assetname_parser.platform.windows:
+                        ...
+                elif platform == assetname_parser.platform.linux:
+                        ...
+                
+                if not match:
+                        return None
+                
+                return {
+                        "asset_type": match.group("name"),
+                        "version": match.group("version"),
+                        "arch": match.group("arch"),
+                        "filename": fullname,
+                }
+        
+class android(frida):
+        " for handling android related assetnames "
+        
+        def get_latest_assets(self):
+                "returns last updated release assets as json "
+                for asset in self.get_all_assets():
+                        parsed_name_json = assetname_parser.parse(asset.name, assetname_parser.platform.android)
+                        if parsed_name_json:
+                                yield parsed_name_json
+            
+def test_download():
         log("testing started")
         downloader = frida()
         for asset in downloader.get_all_assets(downloader.latest):
                 log(f"   asset name  == {asset.name}")
                 if asset.name == "frida-server-17.10.0-android-arm64.xz":
                         log("downloading ...")
-                        path = downloader.download(downloader.latest,asset.name)
+                        path = downloader.download(downloader.latest, asset.name)
                         if path:
                                 log(f"file successfully downloaded = {path}")
-                        
+        
         log("testing ended")
+        
+def test_android():
+        andr = android()
+        for one in andr.get_latest_assets():
+                print(one)
+
+if __name__ == "__main__":
+        test_android()
