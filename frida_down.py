@@ -1,4 +1,5 @@
 from github import Github,Auth
+from github.GithubException import UnknownObjectException
 from urllib.request import urlretrieve
 import logging,os,re,pathlib
 
@@ -60,22 +61,32 @@ class frida:
                         release = self.frida_repo.get_latest_release()
                 else:
                         log ( "a custom release name specified" )
-                        release = self.frida_repo.get_release(name)
+                        try:
+                                release = self.frida_repo.get_release(name)
+                                
+                        except UnknownObjectException:
+                                release = None
+                        
                 if release:
                          log( f"found release  name = {release.name } tag={release.tag_name } date={release.published_at} ")
                 else:
                          log("release not found and returing empty release object")
                 return release
         
-        def download(self, release_name , asset_name ):
+        def download(self, release_name , asset_name , raise_error = False ):
                 "download asset file from release name  + assetname "
                 release = self.get_release( release_name )
-                for asset in  release.get_assets ():
-                        if asset.name == asset_name and filename_validator.is_valid_name(asset_name):
-                                full_localpath = self.download_folder_path / asset_name
-                                filepath , headers = urlretrieve( asset.browser_download_url , full_localpath , reporthook = self.progress )
-                                return filepath
-                raise ValueError("the provided asset name is not found in releases and assets of github repo")
+                if release:
+                        for asset in release.get_assets():
+                                if asset.name == asset_name and filename_validator.is_valid_name(asset_name):
+                                        full_localpath = self.download_folder_path / asset_name
+                                        filepath, headers = urlretrieve(asset.browser_download_url, full_localpath, reporthook = self.progress)
+                                        return filepath
+                        if raise_error:
+                                log ( "the provided  asset not found in github repo releases" )
+                                raise ValueError("the provided  asset not found in github repo releases")
+                if raise_error:
+                        raise ValueError("the provided  release not found in github repo")
 
         def progress(self,block_num, block_size, total_size):
                 downloaded = block_num * block_size
@@ -85,8 +96,9 @@ class frida:
         def get_all_assets(self,release_name=""):
                 "returns asset object "
                 release = self.get_release(release_name)
-                for asset in release.get_assets():
-                        yield asset
+                if release:
+                        for asset in release.get_assets():
+                                yield asset
                         
         def get_latest_assets(self):
                 "returns assets as json "
