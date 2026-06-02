@@ -3,7 +3,7 @@ from urllib.request import urlretrieve
 import logging,os,re
 
 """
-                  === frida donwloader ===
+                  === frida downloader ===
                 author : github.com/its_me_abi
                 date   : 1/6/2026
 
