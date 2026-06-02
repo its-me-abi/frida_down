@@ -7,11 +7,6 @@ import logging,os,re,pathlib
                 author : github.com/its_me_abi
                 date   : 1/6/2026
 
-this modules is created because currently  adding frida agent to android device is a headache for me
-we have to download matching binary according to the frida we use for runnning in computer,
-so we must go through github assetpage and read all things and download it then using adb we have to inject it,
-to make this process easy i created this python module.also i have plan to create a gui for this
-
 """
 
 
