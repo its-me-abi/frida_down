@@ -6,7 +6,7 @@
 
 - Python 3.x
 - pip (Python package manager)
-- `GITHUB_TOKEN` environment variable set (for GitHub API access)
+- `GITHUB_TOKEN` environment variable set (optional ,without this 60 requests per hour per ip is only allowed because of ratelimit)
 
 ## 🚀 Quick Start
 
