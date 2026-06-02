@@ -25,6 +25,20 @@ class filename_validator:
      def is_valid_name(filename) :
              return bool(filename_validator.filename_pattern.fullmatch(filename))
 
+
+class PLATFORM :
+        android = "Android"
+        linux   = "Linux"
+        windows = "Windows"
+        macos   = "macos"
+        ios     = "ios"
+        
+class ARCH:
+        x86 = "x86"
+        x64 = "x86_64"
+        arm = "arm"
+        arm64 = "arm64"
+        
 class frida:
         
         token = os.getenv("GITHUB_TOKEN")
@@ -65,7 +79,8 @@ class frida:
 
         def progress(self,block_num, block_size, total_size):
                 downloaded = block_num * block_size
-                log(f"   downloading data = {downloaded, "/", total_size}")
+                info = f""" { round( downloaded / 1024 ) } KB / {round( total_size / 1024 ) } KB """
+                log(f"  downloading data = {info}")
                 
         def get_all_assets(self,release_name=""):
                 "returns asset object "
@@ -83,17 +98,7 @@ class frida:
 class assetname_parser: # borrowed and modified
         "to parse frida release asset names"
         
-        x86 = "x86"
-        x64 = "x86_64"
-        arm = "arm"
-        arm64 = "arm64"
-        
-        class platform :
-                android = "Android"
-                linux   = "Linux"
-                windows = "Windows"
-                macos   = "macos"
-                ios     = "ios"
+        platform = PLATFORM
         
         ANDROID_ASSET_RE = re.compile(
                 r"^(?P<name>frida-(?:server|gadget|core-devkit))-"
