@@ -43,7 +43,6 @@ class frida:
         def __init__(self, download_folder_path ="./frida_data"):
                 self.frida_repo = self.git.get_repo("frida/frida")
                 self.download_folder_path = pathlib.Path(download_folder_path).resolve()
-                print(self.download_folder_path)
 
         def get_release(self, name ="" ):
                 "returns asset object by name of release tag"
