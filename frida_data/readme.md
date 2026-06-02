@@ -9,10 +9,13 @@ please note that this folder must already exist otherwise an error will be raise
 from frida_down import frida
 
 # Specify custom download path
-downloader = frida ( download_folder_path = "/path/to/save/frida_server" )
+downloader = frida ( download_folder_path = "c://Users/admin/Desktop/frida_down/hello" )
 
 # Download will save to the specified path
 filepath = downloader.download("", "frida-server-17.10.0-android-arm64.xz")
-print( "file downloaded " , filepath )
+print( " file downloaded = " , filepath )
+
+now this willbe printed
+>  file downloaded = c://Users/admin/Desktop/frida_down/hello/frida-server-17.10.0-android-arm64.xz
 
 ```
