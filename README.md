@@ -1,7 +1,9 @@
-# 🔽 frida_down
+# 🔽 frida_down 
 
-> A lightweight Frida binaries downloader
 
+> A lightweight Frida binaries downloader ( unofficial )
+
+[https://github.com/frida/frida](https://github.com/frida/frida/releases)
 ## 📋 Prerequisites
 
 - Python 3.x
