@@ -15,7 +15,6 @@ to make this process easy i created this python module.also i have plan to creat
 """
 
 
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
@@ -26,17 +25,15 @@ log = logger.info
 
 class filename_validator:
      filename_pattern = re.compile(r"^(?!.*\.\.)[A-Za-z0-9._-]+$")
-     
+
      @staticmethod
      def is_valid_name(filename) :
              return bool(filename_validator.filename_pattern.fullmatch(filename))
-     
-
 
 class frida:
         
-        token = Auth.Token( os.getenv("GITHUB_TOKEN") )
-        git  = Github( auth = token , per_page = 100 )
+        token = os.getenv("GITHUB_TOKEN")
+        git  = Github( auth = Auth.Token( token )  , per_page = 100 ) if token else  Github(  per_page = 100 )
         latest = ""
         platform = None  # this should be set by child classes according to regex they want
         
@@ -76,12 +73,13 @@ class frida:
                 log(f"   downloading data = {downloaded, "/", total_size}")
                 
         def get_all_assets(self,release_name=""):
+                "returns asset object "
                 release = self.get_release(release_name)
                 for asset in release.get_assets():
                         yield asset
                         
         def get_latest_assets(self):
-                "returns last updated release assets as json "
+                "returns assets as json "
                 for asset in self.get_all_assets():
                         parsed_name_json = assetname_parser.parse(asset.name, self.platform)
                         if parsed_name_json:
@@ -196,9 +194,6 @@ class ios(frida):
         " for handling android related assetnames "
         platform = assetname_parser.platform.ios
         ...
-
-
-
 
 if __name__ == "__main__":
         ...
