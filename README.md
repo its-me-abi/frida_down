@@ -88,12 +88,13 @@ for asset_info in android_dl.get_latest_assets():
 from frida_down import frida
 
 # Specify custom download path
-downloader = frida(filepath="/path/to/save/frida_server")
+downloader = frida ( download_folder_path = "/path/to/save/frida_server" )
 
 # Download will save to the specified path
 filepath = downloader.download("", "frida-server-17.10.0-android-arm64.xz")
+print( "file downloaded " , filepath )
 ```
 
 ## 📦 LICENCE
-MIT
+AGPL
 
