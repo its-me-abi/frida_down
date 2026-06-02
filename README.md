@@ -1,5 +1,4 @@
-# 🔽 frida_down 
-
+# ⬇️ frida_down 
 
 > A lightweight Frida binaries downloader ( unofficial )
 
