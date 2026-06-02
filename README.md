@@ -39,7 +39,7 @@ release = downloader.get_release()
 release = downloader.get_release("17.10.0")
 
 # Download a specific asset
-filepath = downloader.download("", "frida-server-17.10.0-android-arm64.xz")
+filepath = downloader.download(downloader.latest, "frida-server-17.10.0-android-arm64.xz")
 
 # List all assets in latest release
 for asset in downloader.get_all_assets():
