@@ -2,7 +2,7 @@
 
 > A lightweight Frida binaries downloader ( unofficial )
 
-[https://github.com/frida/frida](https://github.com/frida/frida/releases)
+to know more about frida [https://github.com/frida/frida](https://github.com/frida/frida/releases)
 ## 📋 Prerequisites
 
 - Python 3.x
