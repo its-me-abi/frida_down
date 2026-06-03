@@ -1,5 +1,5 @@
 import argparse , logging ,sys
-import frida_down
+from . import frida_down
 
 logging.basicConfig(
       level=logging.INFO,
