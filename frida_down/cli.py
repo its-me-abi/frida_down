@@ -1,5 +1,5 @@
 import argparse , logging ,sys
-import frida_down
+from. import frida_down
 
 logging.basicConfig(
       level=logging.INFO,
@@ -58,5 +58,5 @@ class main:
 
 
 if __name__ == "__main__":
-      sys.argv = ["test", "-i", "17.10.1","-a", "arm",  "-p", "Android","-t","server"]
+      #sys.argv = ["test", "-i", "17.10.1","-a", "arm",  "-p", "Android","-t","server"]
       main().run()
