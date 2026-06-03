@@ -22,7 +22,12 @@ pip install -r requirements.txt
 # Set your GitHub token
 export GITHUB_TOKEN=your_github_token_here
 ```
+or 
+```bash
+# just install it from pypi
+pip install frida-down
 
+```
 ## 📖 API Usage
 
 ### Download Frida Binaries
