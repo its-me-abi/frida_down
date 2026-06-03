@@ -91,7 +91,7 @@ class frida:
         def progress(self,block_num, block_size, total_size):
                 downloaded = block_num * block_size
                 info = f""" { round( downloaded / 1024 ) } KB / {round( total_size / 1024 ) } KB """
-                log(f"  downloading data = {info}")
+                #log(f"  downloading data = {info}")
                 
         def get_all_assets(self,release_name=""):
                 "returns asset object "
@@ -100,9 +100,9 @@ class frida:
                         for asset in release.get_assets():
                                 yield asset
                         
-        def get_latest_assets(self):
+        def get_latest_assets(self, release_name = "" ):
                 "returns assets as json "
-                for asset in self.get_all_assets():
+                for asset in self.get_all_assets( release_name ):
                         parsed_name_json = assetname_parser.parse(asset.name, self.platform)
                         if parsed_name_json:
                                 yield parsed_name_json
@@ -205,7 +205,8 @@ class macos(frida):
 class ios(frida):
         " for handling android related assetnames "
         platform = assetname_parser.platform.ios
-        ...
+        
+        
 
 if __name__ == "__main__":
         ...
