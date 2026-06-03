@@ -57,4 +57,4 @@ frida-down = "frida_down.cli:main"
 packages = ["frida_down"]
 
 [tool.setuptools.package-data]
-frida_down = ["../frida_data/"]
+frida_down = ["frida_data/*"]
