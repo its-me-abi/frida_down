@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "AGPL-3.0"}
 authors = [
-    {name = "its-me-abi", email = ""}
+    {name = "its-me-abi", email = "keralaboypypi@keralaboy.anonaddy.com"}
 ]
 keywords = ["frida", "downloader", "binaries", "android", "reverse-engineering"]
 classifiers = [
