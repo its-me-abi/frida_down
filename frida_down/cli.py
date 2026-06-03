@@ -39,7 +39,7 @@ class main:
       def parse(self):
             
             self.arg = argparse.ArgumentParser(description="frida downloader cli")
-            self.arg.add_argument("-v", "--verbose", type=str, default="True", help="pass any value to turn on debugging log")
+            self.arg.add_argument("-v", "--verbose", type=str, default="", help="pass any value to turn on debugging log")
             self.arg.add_argument("-i", "--install", type=str,default= "", help="enter frida version to download")
             self.arg.add_argument("-a", "--arch", type=str,  choices = [p.value for p in frida_down.ARCH], help="enter frida architecture like arm, arm64 ,x86 ,x86_64")
             self.arg.add_argument("-p", "--platform", type=str,  choices = [p.value for p in frida_down.PLATFORM], help="choose platform like Android, Linux,Windows,macos,ios")
