@@ -2,6 +2,8 @@ from github import Github,Auth
 from github.GithubException import UnknownObjectException
 from urllib.request import urlretrieve
 import logging,os,re,pathlib
+from enum import Enum
+
 
 """
                   === frida downloader ===
@@ -27,14 +29,14 @@ class filename_validator:
             return bool(filename_validator.filename_pattern.fullmatch(filename))
 
 
-class PLATFORM :
+class PLATFORM (str,Enum):
       android = "Android"
       linux   = "Linux"
       windows = "Windows"
       macos   = "macos"
       ios     = "ios"
 
-class ARCH:
+class ARCH(str,Enum):
       x86 = "x86"
       x64 = "x86_64"
       arm = "arm"
@@ -42,7 +44,7 @@ class ARCH:
 
 class frida:
       
-      token = os.getenv("GITHUB_TOKEN")
+      token = os.getenv("GITHUB_TOKEN-")
       git  = Github( auth = Auth.Token( token )  , per_page = 100 ) if token else  Github(  per_page = 100 )
       latest = ""
       platform = None  # this should be set by child classes according to regex they want
@@ -61,9 +63,7 @@ class frida:
             if not name or  name == self.latest :
                   logger.debug (" no name passed as argument so fetching latest release" )
                   release = self.frida_repo.get_latest_release()
-                  
             else:
-                  
                   try:
                         release = self.frida_repo.get_release(name)
                   except UnknownObjectException:
@@ -72,7 +72,7 @@ class frida:
             if release:
                   logger.debug( f"found release  name = {release.name } tag={release.tag_name } date={release.published_at} ")
             else:
-                  log("release not found and returning empty release object")
+                  log("release not found and returning empty value")
                   
             return release
       
@@ -103,7 +103,7 @@ class frida:
             
             downloaded = block_num * block_size
             info = f""" { round( downloaded / 1024 ) } KB / {round( total_size / 1024 ) } KB """
-            #log(f"  downloading data = {info}")
+            logger.debug(f"  downloading data = {info}")
       
       def get_all_assets(self,release_name=""):
             

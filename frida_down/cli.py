@@ -1,5 +1,8 @@
 import argparse , logging ,sys
-from. import frida_down
+try:
+    from . import frida_down
+except:
+    import frida_down
 
 logging.basicConfig(
       level=logging.INFO,
@@ -22,7 +25,7 @@ class main:
                         parsed.append(f"--{key} {value}")
             return " ".join(parsed)
       
-      def download(self,version , platform = frida_down.PLATFORM.android , arch="arm", ftype=""):
+      def download(self,version , platform  , arch = frida_down.ARCH.arm, ftype=""):
             
             if platform == frida_down.PLATFORM.android:
                   down = frida_down.android()
@@ -31,16 +34,18 @@ class main:
                               log ( "downloading..." )
                               filename = down.download( version, android["filename"] )
                               log ( f"downloaded = {filename} " )
+                              return filename
       
       def parse(self):
+            
             self.arg = argparse.ArgumentParser(description="frida downloader cli")
-            self.arg.add_argument("-i", "--install", type=str, help="enter frida version to download")
-            self.arg.add_argument("-a", "--arch", type=str, help="enter frida architecture like arm, arm64 ,x86 ,x86_64")
-            self.arg.add_argument("-p", "--platform", type=str,  default = "Android" , help="choose platform like Android, Linux,Windows,macos,ios")
+            self.arg.add_argument("-v", "--verbose", type=str, default="True", help="pass any value to turn on debugging log")
+            self.arg.add_argument("-i", "--install", type=str,default= "", help="enter frida version to download")
+            self.arg.add_argument("-a", "--arch", type=str,  choices = [p.value for p in frida_down.ARCH], help="enter frida architecture like arm, arm64 ,x86 ,x86_64")
+            self.arg.add_argument("-p", "--platform", type=str,  choices = [p.value for p in frida_down.PLATFORM], help="choose platform like Android, Linux,Windows,macos,ios")
             self.arg.add_argument("-t", "--ftype", type=str , default = "frida-server" ,
                                   help="enter frida file type like 'frida-server','frida-gadget','frida-core-devkit' or anything ")
             args = self.arg.parse_args()
-            log( self.toString( args ) )
             return args
       
       def run(self):
@@ -51,12 +56,17 @@ class main:
                   self.arg.print_help()
             else:
                   if args.install and args.arch and args.platform :
-                        self.download( args.install, platform = args.platform  , arch = args.arch ,ftype = args.ftype)
+                        if args.verbose : frida_down.logger.setLevel(logging.DEBUG)
+                        if not self.download( args.install, platform = args.platform  , arch = args.arch ,ftype = args.ftype):
+                              log("error in donwloading ")
+                              sys.exit(1)
+                        else:
+                              sys.exit(0)
                   else:
-                        log("please provide correct options")
                         self.arg.print_help()
+                        sys.exit(1)
 
 
 if __name__ == "__main__":
-      #sys.argv = ["test", "-i", "17.10.1","-a", "arm",  "-p", "Android","-t","server"]
+      sys.argv = ["test", "-i", "15.0.1","-a", "arm",  "-p", "Android","-t","server"]
       main().run()
