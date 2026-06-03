@@ -68,5 +68,5 @@ class main:
 
 
 if __name__ == "__main__":
-      sys.argv = ["test", "-i", "15.0.1","-a", "arm",  "-p", "Android","-t","server"]
+      #sys.argv = ["test", "-i", "15.0.1","-a", "arm",  "-p", "Android","-t","server"]
       main().run()
