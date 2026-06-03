@@ -19,7 +19,7 @@ jobs:
     - name: Build and publish
       env:
         TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.pypixx.TWINE_PASSWORD }}
+        TWINE_PASSWORD: ${{ secrets.pypixx.PYPI_API_TOKEN }}
       run: |
         python -m pip install --upgrade pip
         python -m pip install setuptools
