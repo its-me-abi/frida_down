@@ -1,5 +1,5 @@
 import argparse , logging ,sys
-from . import frida_down
+import frida_down
 
 logging.basicConfig(
       level=logging.INFO,
@@ -23,6 +23,7 @@ class main:
             return " ".join(parsed)
       
       def download(self,version , platform = frida_down.PLATFORM.android , arch="arm", ftype=""):
+            
             if platform == frida_down.PLATFORM.android:
                   down = frida_down.android()
                   for android in down.get_latest_assets(version):
@@ -57,5 +58,5 @@ class main:
 
 
 if __name__ == "__main__":
-      #sys.argv = ["test", "-i", "17.10.1","-a", "arm",  "-p", "Android","-t","server"]
+      sys.argv = ["test", "-i", "17.10.1","-a", "arm",  "-p", "Android","-t","server"]
       main().run()
