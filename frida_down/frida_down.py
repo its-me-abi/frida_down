@@ -59,20 +59,20 @@ class frida:
                   raise ValueError("pleased provide string as repo name to frida github downloader ")
             
             if not name or  name == self.latest :
-                  log (" no name passed as argument so fetching latest release" )
+                  logger.debug (" no name passed as argument so fetching latest release" )
                   release = self.frida_repo.get_latest_release()
                   
             else:
-                  log ( "a custom release name specified" )
+                  
                   try:
                         release = self.frida_repo.get_release(name)
                   except UnknownObjectException:
                         release = None
             
             if release:
-                  log( f"found release  name = {release.name } tag={release.tag_name } date={release.published_at} ")
+                  logger.debug( f"found release  name = {release.name } tag={release.tag_name } date={release.published_at} ")
             else:
-                  log("release not found and returing empty release object")
+                  log("release not found and returning empty release object")
                   
             return release
       
