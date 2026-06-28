@@ -3,6 +3,14 @@
 > A lightweight Frida binaries downloader ( unofficial )
 
 to know more about frida [https://github.com/frida/frida](https://github.com/frida/frida/releases)
+
+## about frida_down
+
+it is a python module for downlaoding frida binaries from github release programmatically,    
+in the past it was users resposibilioty to download  and scrolling through huge list,  
+by this module it is easy to do it now,this module canbe used as backend for gui,  
+it also provides cli if installed via pip
+
 ## 📋 Prerequisites
 
 - Python 3.x
